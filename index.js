@@ -19,6 +19,11 @@
       this.color = color;
     }
     else {
+      if (preLogName) {
+        console.log('---- end ----');
+        console.log('\n');
+      }
+
       // 复杂类型不允许输出颜色
       if (typeof name === 'string') {
         console.log('%c' + name, 'color:' + color);
