@@ -8,11 +8,11 @@
   // 上一次log使用的名称
   let preLogName = '';
 
-  /**
-   * 构造器
-   * @param {String} name 名称或message
-   * @param {*} color 颜色
-   */
+  /** 
+  * @start-def: Log: name, color
+  *  name: String 名称或message
+  *  color: String 颜色
+  */
   const Log = function (name, color) {
     if (this.constructor === Log) {
       this.name = name;
@@ -37,9 +37,10 @@
   };
   
   /**
-   * 输出信息
-   * @param {String} message log信息
-   * @param {String} color 颜色
+   * @def: .message: message, color
+   *  message: String log信息
+   *  color: String 颜色
+   *  输出信息
    */
   Log.prototype.message = function (message, color) {
     if (this.__isOutMessage()) {
@@ -59,6 +60,7 @@
   };
   
   /**
+   * @def: .hideMessage:
    * 隐藏log
    */
   Log.prototype.hideMessage = function () {
@@ -66,6 +68,7 @@
   };
   
   /**
+   * @def: .showMessage:
    * 显示log
    */
   Log.prototype.showMessage = function () {
@@ -73,6 +76,7 @@
   };
   
   /**
+   * @def: .__isOutMessage:
    * 判断是否输出log信息
    */
   Log.prototype.__isOutMessage = function () {
