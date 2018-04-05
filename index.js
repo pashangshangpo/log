@@ -4,7 +4,7 @@
  */
 
 
-;(function (w) {
+;(function (g) {
   // 上一次log使用的名称
   let preLogName = '';
 
@@ -80,5 +80,5 @@
     return state === 'true' || state == null;
   };
 
-  w.Log = Log;
-}(window));
+  g.Log = Log;
+}(typeof global !== 'undefined' ? global : window));
