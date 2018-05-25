@@ -2,17 +2,23 @@
  * @file log工具
  * @author pashangshangpo
  * @createTime 2018年5月25日 下午1:11:14
+ * 
+ * @api
+ *   Log: (name, color) => [Undefined, Object]
+ *     arguments
+ *       name: String 名称或message
+ *       color: String 颜色
+ *     prototype
+ *       message: ...messages
+ *         message: String log信息
+ *       hideMessage: () => undefined 隐藏log
+ *       showMessage: () => undefined 显示log
  */
 
 ;(function (g) {
   var prefix = 'pssp-log-';
   var preLogName = '';
 
-  /** 
-  * @start-def: Log: name, color
-  *  name: String 名称或message
-  *  color: String 颜色
-  */
   var Log = function (name, color) {
     if (this && this.constructor === Log) {
       this.name = name;
@@ -36,11 +42,6 @@
     }
   };
 
-  /**
-   * @def: .message: ...messages
-   *  message: * log信息
-   *  输出信息
-   */
   Log.prototype.message = function (...messages) {
     var message = '';
 
@@ -67,29 +68,17 @@
     }
   };
 
-  /**
-   * @def: .hideMessage:
-   * 隐藏log
-   */
   Log.prototype.hideMessage = function () {
     localStorage.setItem(prefix + this.name, 'false');
   };
 
-  /**
-   * @def: .showMessage:
-   * 显示log
-   */
   Log.prototype.showMessage = function () {
     localStorage.setItem(prefix + this.name, 'true');
   };
 
-  /**
-   * @def: .__isOutMessage:
-   * 判断是否输出log信息
-   */
   Log.prototype.__isOutMessage = function () {
     var state = localStorage.getItem(prefix + this.name);
-    
+
     return state === 'true' || state == null;
   };
 
