@@ -4,7 +4,7 @@
  * @createTime 2018年5月25日 下午1:11:14
  * 
  * @api
- *   Log: (name, color) => [Undefined, Object]
+ *  [global, window]: (name, color) => [Undefined, Object]
  *     arguments
  *       name: String 名称或message
  *       color: String 颜色
