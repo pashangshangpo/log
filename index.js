@@ -1,8 +1,8 @@
 /**
  * @file log工具
  * @author pashangshangpo
+ * @createTime 2018年5月25日 下午1:11:14
  */
-
 
 ;(function (g) {
   // 上一次log使用的名称
