@@ -31,7 +31,7 @@ htmlLog.hideMessage();
 ## api
 
 ```
-[global, window].Log: (name, color) => [Undefined, Object]
+Log: (name, color) => [Undefined, Object]
   arguments
     name: String 名称或message
     color: String 颜色
