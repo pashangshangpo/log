@@ -4,7 +4,7 @@
  * @createTime 2018年5月25日 下午1:11:14
  * 
  * @api
- *  [global, window]: (name, color) => [Undefined, Object]
+ *  Log: (name, color) => [Undefined, Object]
  *     arguments
  *       name: String 名称或message
  *       color: String 颜色
@@ -15,72 +15,70 @@
  *       showMessage: () => undefined 显示log
  */
 
-;(function (g) {
-  var prefix = 'pssp-log-';
-  var preLogName = '';
+let prefix = 'pssp-log-';
+let preLogName = '';
 
-  var Log = function (name, color) {
-    if (this && this.constructor === Log) {
-      this.name = name;
-      this.color = color;
+const Log = function (name, color) {
+  if (this && this.constructor === Log) {
+    this.name = name;
+    this.color = color;
+  }
+  else {
+    if (preLogName) {
+      console.log('---- end ----');
+      console.log('\n');
+    }
+
+    // 复杂类型不允许输出颜色
+    if (typeof name === 'string') {
+      console.log('%c' + name, 'color:' + color);
     }
     else {
-      if (preLogName) {
-        console.log('---- end ----');
-        console.log('\n');
-      }
+      console.log(name);
+    }
 
-      // 复杂类型不允许输出颜色
-      if (typeof name === 'string') {
-        console.log('%c' + name, 'color:' + color);
+    preLogName = '';
+  }
+};
+
+Log.prototype.message = function (...messages) {
+  var message = '';
+
+  if (this.__isOutMessage()) {
+    if (preLogName !== this.name) {
+      console.log('---- ' + this.name + ' ----');
+    }
+
+    if (messages.length > 1) {
+      console.log.apply(null, messages);
+    }
+    else {
+      message = messages[0];
+
+      if (typeof message === 'string') {
+        console.log('%c' + message, 'color:' + this.color);
       }
       else {
-        console.log(name);
+        console.log(message);
       }
-
-      preLogName = '';
     }
-  };
 
-  Log.prototype.message = function (...messages) {
-    var message = '';
+    preLogName = this.name;
+  }
+};
 
-    if (this.__isOutMessage()) {
-      if (preLogName !== this.name) {
-        console.log('---- ' + this.name + ' ----');
-      }
+Log.prototype.hideMessage = function () {
+  localStorage.setItem(prefix + this.name, 'false');
+};
 
-      if (messages.length > 1) {
-        console.log.apply(null, messages);
-      }
-      else {
-        message = messages[0];
+Log.prototype.showMessage = function () {
+  localStorage.setItem(prefix + this.name, 'true');
+};
 
-        if (typeof message === 'string') {
-          console.log('%c' + message, 'color:' + this.color);
-        }
-        else {
-          console.log(message);
-        }
-      }
+Log.prototype.__isOutMessage = function () {
+  var state = localStorage.getItem(prefix + this.name);
 
-      preLogName = this.name;
-    }
-  };
+  return state === 'true' || state == null;
+};
 
-  Log.prototype.hideMessage = function () {
-    localStorage.setItem(prefix + this.name, 'false');
-  };
-
-  Log.prototype.showMessage = function () {
-    localStorage.setItem(prefix + this.name, 'true');
-  };
-
-  Log.prototype.__isOutMessage = function () {
-    var state = localStorage.getItem(prefix + this.name);
-
-    return state === 'true' || state == null;
-  };
-
-  g.Log = Log;
-}(typeof global !== 'undefined' ? global : window));
+export default Log
